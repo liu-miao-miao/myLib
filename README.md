@@ -1,4 +1,5 @@
-# mylib
+# myLib
+a series of personal components
 
 ## Project setup
 ```
