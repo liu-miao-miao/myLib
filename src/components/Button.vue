@@ -1,8 +1,4 @@
 <template>
-  <!-- <div
-    class="btn"
-    :class="{disable: disable}"
-    @click="onClick">{{title}}</div> -->
   <button
     :class="btnClasses"
     :style="[{width: btnWidth},{height: btnHight}]"
@@ -10,22 +6,24 @@
     :disabled="buttonDisabled || loading"
     :autofocus="autofocus"
     :type="nativeType">
-    <i v-if="loading" class="el-icon-loading"></i>
+    <i v-if="loading" class="icon-loading">
+      <BtnLoading></BtnLoading>
+    </i>
     <i v-if="icon && !loading" :class="icon"></i>
-    <span v-if="$slots.default"><slot></slot></span>
+    <slot></slot>
   </button>
 </template>
+
 <script>
 const prefixCls = 'btn';
+import BtnLoading from './BtnLoading.vue';
+
 export default {
+  name: 'Button',
   props: {
     type: {
       type: String,
       default: 'primary',// primary info success warning error
-    },
-    size: {
-      type: String,
-      default: 'default',// default big small mini
     },
     width: {
       type: String,
@@ -35,11 +33,26 @@ export default {
       type: String,
       default: '40px',
     },
+    size: {
+      type: String,
+      default: 'default',// default big small mini
+    },
+    nativeType: {
+      type: String,
+      default: 'button'
+    },
+    icon: {
+      type: String,
+      default: '',
+    },
     disabled: Boolean,
     loading: Boolean,
     autofocus: Boolean,
     round: Boolean, 
-    circle: Boolean, 
+    circle: Boolean,
+  },
+  components: {
+    BtnLoading,
   },
   computed: {
     btnClasses() {
@@ -78,12 +91,14 @@ export default {
 </script>
 <style lang="less" scoped>
 .btn {
-  background-color: #409eff;
-  font-size: 20px;
+  padding: 5px 10px;
+  font-size: 14px;
   color: #fff;
   text-align: center;
   border: none;
   outline: none;
+  background-color: #409eff;
+  vertical-align: middle;
   & + & {
     margin-left: 10px;
   }
@@ -100,12 +115,21 @@ export default {
     background-color: #FF9966;
   }
   &:hover {
-    opacity: 0.9;
+    opacity: .9;
     cursor: pointer;
   }
   &.is-disabled, &.is-loading {
-    opacity: .5;
+    opacity: .7;
     cursor: not-allowed;
+  }
+  &.is-round {
+    border-radius: 4px;
+  }
+  &-big {
+    padding: 8px 12px;
+  }
+  &.is-circle {
+    border-radius: 20px;
   }
 }
 </style>
